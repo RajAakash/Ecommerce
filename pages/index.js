@@ -1,3 +1,7 @@
 export default function Home() {
-  return <div>This is the main page of Next.js ecommerce site</div>
+  return (
+    <div>
+      <h1 className='text-3xl font-bold'>Next.js main page</h1>
+    </div>
+  )
 }
