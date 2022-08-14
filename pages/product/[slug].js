@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import { useRouter } from 'next/router'
+import Router, { useRouter } from 'next/router'
 import Layout from '../components/Layout'
 import data from '../../utils/data'
 import Link from 'next/link'
@@ -9,6 +9,7 @@ import { Store } from '../../utils/Store'
 export default function ProductScreen() {
   const { state, dispatch } = useContext(Store)
   const { query } = useRouter()
+  // const router = useRouter()
   const { slug } = query
   const product = data.products.find((x) => x.slug === slug)
 
@@ -26,12 +27,15 @@ export default function ProductScreen() {
     }
 
     dispatch({ type: 'CART_ADD_ITEM', payload: { ...product, quantity } })
+    // router.push('/cart')
   }
 
   return (
     <Layout title={product.name}>
       <div className='py-2'>
-        <Link href='/'>Back to main page</Link>
+        <Link href='/'>
+          <button className='primary-button'>Back</button>
+        </Link>
       </div>
       <div className='grid md:grid-cols-7 md:gap-3'>
         <div></div>
@@ -62,7 +66,7 @@ export default function ProductScreen() {
         <div className='card p-5'>
           <div className='mb-2 flex justify-between'>
             <div>Price</div>
-            <div>{product.price}</div>
+            <div>${product.price}</div>
           </div>
 
           <div className='mb-2 flex justify-between'>
