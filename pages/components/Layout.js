@@ -1,4 +1,4 @@
-import { ShoppingCartIcon } from '@heroicons/react/solid'
+import { ShoppingCartIcon, XCircleIcon } from '@heroicons/react/solid'
 import Head from 'next/head'
 import Link from 'next/link'
 import React, { useContext, useEffect, useState } from 'react'
@@ -22,19 +22,30 @@ export default function Layout({ title, children }) {
               <a className='text-lg font-bold'>Ecommerce</a>
             </Link>
             <div>
+              <Link href='/upload'>
+                <button className='bg-transparent hover:bg-blue-500 hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded'>
+                  Upload
+                </button>
+              </Link>
               <Link href='/cart'>
                 <a className='p-2'>
-                  Cart
-                  {cartItemsCount > 0 && (
-                    <span className='ml-1 rounded-full bg-indigo-600 px-2 py-1 text-xs font-bold text-white'>
-                      {cartItemsCount}
-                    </span>
-                  )}
+                  <button className='bg-transparent hover:bg-blue-500 hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded'>
+                    Cart
+                    {cartItemsCount > 0 && (
+                      <span className='ml-1 rounded-full bg-indigo-600 px-2 py-1 text-xs font-bold text-white'>
+                        {cartItemsCount}
+                      </span>
+                    )}
+                  </button>
                 </a>
               </Link>
 
               <Link href='/login'>
-                <a className='px-2'>Login</a>
+                <a className='px-2'>
+                  <button className='bg-transparent hover:bg-blue-500 hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded'>
+                    Login
+                  </button>
+                </a>
               </Link>
             </div>
           </nav>

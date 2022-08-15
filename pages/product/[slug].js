@@ -81,3 +81,8 @@ export default function ProductScreen() {
     </Layout>
   )
 }
+
+export async function getServerSideProps(context) {
+  const { params } = context
+  const { slug } = params
+}
