@@ -1,16 +1,39 @@
 import React from 'react'
-import Layout from './components/Layout'
+import Layout from '../components/Layout'
 import { useForm } from 'react-hook-form'
+import axios from 'axios'
+import { Router, useRouter } from 'next/router'
 
-export default function upload() {
+export default function Upload() {
   const {
     register,
     handleSubmit,
     watch,
     formState: { errors },
   } = useForm()
+  const router = useRouter()
+  const onSubmit = async (data) => {
+    const formData = new FormData()
 
-  const onSubmit = ({ email, password }) => console.log(email, password)
+    Object.keys(data).forEach((key) => {
+      if (key === 'images') {
+        ;[...data.images].forEach((image) => {
+          formData.append('images', image)
+        })
+      } else {
+        formData.append(key, data[key])
+      }
+    })
+    for (const key of formData) {
+      console.log(key, formData[key])
+    }
+    await axios.post('/api/product', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    })
+    router.replace('/')
+  }
 
   return (
     <Layout title='upload'>
@@ -18,8 +41,7 @@ export default function upload() {
         className='mx-auto max-w-screen-md'
         onSubmit={handleSubmit(onSubmit)}
       >
-        <h1 className='mb-4 text-xl'> upload</h1>
-
+        <h1 className='mb-4 text-xl'> Upload</h1>
         <div className='mb-4'>
           <label htmlFor='name'>Name</label>
           <input
@@ -33,7 +55,6 @@ export default function upload() {
             <div className='text-red-500'>{errors.name.message}</div>
           )}
         </div>
-
         <div className='mb-4'>
           <label htmlFor='price'>Price</label>
           <input
@@ -49,24 +70,26 @@ export default function upload() {
         </div>
 
         <div className='mb-4'>
-          <label htmlFor='brand'>Brand</label>
+          <label htmlFor='countInStock'>In Stock</label>
           <input
-            type='text'
-            {...register('brand', { required: 'Please enter brand' })}
+            type='number'
+            {...register('countInStock', {
+              required: 'Please enter count in stock',
+            })}
             className='w-full'
-            id='brand'
+            id='countInStock'
             autoFocus
           ></input>
-          {errors.brand && (
-            <div className='text-red-500'>{errors.brand.message}</div>
+          {errors.countInStock && (
+            <div className='text-red-500'>{errors.countInStock.message}</div>
           )}
         </div>
 
         <div className='mb-4'>
           <label htmlFor='Image'>Image</label>
           <input
-            type='text'
-            {...register('Image', { required: 'Please enter link to Image' })}
+            type='file'
+            {...register('images', { required: 'Please link image' })}
             className='w-full'
             id='Image'
             autoFocus
@@ -75,10 +98,10 @@ export default function upload() {
             <div className='text-red-500'>{errors.Image.message}</div>
           )}
         </div>
-
         <div className='mb-4'>
           <label htmlFor='description'>Description</label>
-          <input
+          <textarea
+            rows={5}
             type='text'
             {...register('description', {
               required: 'Please enter description',
@@ -86,12 +109,11 @@ export default function upload() {
             className='w-full'
             id='description'
             autoFocus
-          ></input>
+          ></textarea>
           {errors.description && (
             <div className='text-red-500'>{errors.description.message}</div>
           )}
         </div>
-
         <div className='mb-4'>
           <button className='primary-button'>Upload</button>
         </div>

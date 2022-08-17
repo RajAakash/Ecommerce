@@ -3,7 +3,7 @@ import Image from 'next/image'
 import React, { useContext } from 'react'
 import { XCircleIcon } from '@heroicons/react/solid'
 import { Store } from '../utils/Store'
-import Layout from './components/Layout'
+import Layout from '../components/Layout'
 import { useRouter } from 'next/router'
 import dynamic from 'next/dynamic'
 

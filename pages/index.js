@@ -1,8 +1,8 @@
-import Layout from './components/Layout'
-import ProductItem from './components/ProductItem'
+import Layout from '../components/Layout'
+import ProductItem from '../components/ProductItem'
 import data from '../utils/data'
 
-export default function Home() {
+export default function Home({ products }) {
   return (
     <Layout title='Home page'>
       <div className='grid grid-cols-1 gap-3 md:grid-cols-3 lg:grid-cols-3'>
@@ -12,14 +12,4 @@ export default function Home() {
       </div>
     </Layout>
   )
-}
-
-export async function getServerSideProps() {
-  await db.connect()
-  const products = await Product.find().lean()
-  return {
-    props: {
-      products,
-    },
-  }
 }

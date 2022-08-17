@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import Link from 'next/link'
-import { Store } from '../../utils/Store'
+import { Store } from '../utils/Store'
 import Router, { useRouter } from 'next/router'
 
 export default function ProductItem({ product }) {
